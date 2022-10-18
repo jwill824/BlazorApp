@@ -1,0 +1,18 @@
+﻿@page "/product-list"
+
+@inject HttpClient Http
+
+@using BlazorApp.Models
+
+<h3>ProductList</h3>
+
+@code {
+    public List<Product> Products { get; set; } = new();
+
+    protected override async Task OnInitializedAsync() => Products = await Http.GetFromJsonAsync<List<Product>>("sample-data/products.json") ?? new List<Product>();
+}
+
+@foreach (var product in Products)
+{
+    <ProductDisplay Product="product" DisplayBuyButton="true" />
+}
