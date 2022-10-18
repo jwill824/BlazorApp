@@ -1,12 +1,41 @@
 ﻿@page "/checkout"
 @using BlazorApp.States
+@using BlazorApp.Models
 
 <h3>Checkout</h3>
 
 @inject CartState CartState
+@inject IJSRuntime JsRuntime
 
 <span>You have @CartState.SelectedItems.Count item(s) in your cart.</span>
 @foreach (var selectedItem in CartState.SelectedItems)
 {
     <ProductDisplay Product="selectedItem" />
+}
+<EditForm Model="CheckoutForm" OnValidSubmit="SubmitAsync">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <div>
+        <label>Name:</label>
+        <InputText @bind-Value="CheckoutForm.Name"></InputText>
+        <ValidationMessage class="form-control" For="()=>CheckoutForm.Name"></ValidationMessage>
+    </div>
+
+    <div>
+        <label for="address">Address:</label>
+        <InputText @bind-Value="CheckoutForm.Address"></InputText>
+        <ValidationMessage For="()=>CheckoutForm.Address"></ValidationMessage>
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</EditForm>
+
+@code {
+    public CheckoutForm CheckoutForm { get; set; } = new();
+
+    private async Task SubmitAsync()
+    {
+        await JsRuntime.InvokeVoidAsync("alert", $"Thank you {CheckoutForm.Name}, we will deliver to {CheckoutForm.Address}.");
+    }
 }
