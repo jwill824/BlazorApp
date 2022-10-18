@@ -11,4 +11,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.9" PrivateAssets="all" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4sample-data_4products_1json__JsonSchema="[" /></VisualStudio></ProjectExtensions>
+
 </Project>
